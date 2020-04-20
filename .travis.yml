@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -e CI=true -t renatoelric/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run renatoelric/react-test npm test -- --coverage
+
+after_success:
+    - docker build -t renatoelric/complex-client ./client
+    - docker build -t renatoelric/complex-nginx ./nginx
+    - docker build -t renatoelric/complex-server ./server
+    - docker build -t renatoelric/complex-worker ./worker
+
+    #Log in to docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker pushrenatoelric/complex-client
+    - docker pushrenatoelric/complex-nginx
+    - docker pushrenatoelric/complex-server
+    - docker pushrenatoelric/complex-worker
