@@ -4,10 +4,10 @@ services:
     - docker
 
 before_install:
-    - docker build -e CI=true -t renatoelric/react-test -f ./client/Dockerfile.dev ./client
+    - docker build -t renatoelric/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run renatoelric/react-test npm test -- --coverage
+    - docker run -e CI=true renatoelric/react-test npm test -- --coverage
 
 after_success:
     - docker build -t renatoelric/complex-client ./client
