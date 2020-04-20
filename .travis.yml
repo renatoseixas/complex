@@ -17,7 +17,7 @@ after_success:
 
     #Log in to docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-    - docker pushrenatoelric/complex-client
-    - docker pushrenatoelric/complex-nginx
-    - docker pushrenatoelric/complex-server
-    - docker pushrenatoelric/complex-worker
+    - docker push renatoelric/complex-client
+    - docker push renatoelric/complex-nginx
+    - docker push renatoelric/complex-server
+    - docker push renatoelric/complex-worker 
